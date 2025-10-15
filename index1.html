@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Portfolio — Resti Nadia Marpaung</title>
+
+<!-- Font + Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --bg:#fbfaf8;            /* putih krem lembut */
+  --card:#fff;             /* kartu putih */
+  --accent:#cf9f3a;        /* gold lembut */
+  --accent-strong:#d4af37; /* gold sedikit lebih tajam */
+  --muted:#6b6b6b;
+  --glass: rgba(255,255,255,0.6);
+  --shadow: 0 10px 30px rgba(21,21,21,0.06);
+  --maxw:1100px;
+  --transition:350ms cubic-bezier(.2,.9,.2,1);
+  --radius:14px;
+}
+
+/* reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--muted);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+a{color:inherit}
+
+/* ===== WELCOME OVERLAY ===== */
+#welcomePage{
+  position:fixed; inset:0; z-index:2000;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25));
+  /* 🟡 UBAH DI SINI: ganti foto background welcome */
+  background-image: url('gambar/background-welcome.jpg');
+  background-size:cover; background-position:center;
+  transition:opacity 900ms ease, transform 900ms ease;
+  padding:28px;
+}
+#welcomePage.hidden{ opacity:0; transform:scale(1.04); pointer-events:none; }
+
+#welcomeInner{
+  width:100%; max-width:860px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.92));
+  border-radius:18px; padding:36px; box-shadow:var(--shadow);
+  display:flex; gap:22px; align-items:center; justify-content:space-between;
+  backdrop-filter: blur(6px);
+}
+#welcomeLeft{ flex:1; min-width:240px }
+#welcomeRight{ width:240px; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; }
+
+.brandLogo{
+  width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--accent), rgba(255,255,255,0.4));
+  color:#fff;font-family:'Pacifico',cursive;font-size:1.4rem; box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+h1.welcomeTitle{ font-family:'Pacifico',cursive; color:#222; font-size:1.9rem; margin-top:6px }
+p.welcomeSub{ color:var(--muted); margin-top:8px; line-height:1.4 }
+
+/* typing once */
+#typingOnce{ color:var(--accent-strong); font-weight:600; margin-top:12px; min-height:26px; }
+
+/* socials in welcome */
+.socials{ display:flex; gap:12px; margin-top:16px }
+.socials a{ display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; border:1px solid rgba(0,0,0,0.04); background:#fff; color:var(--muted); text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,0.06); transition:transform var(--transition), box-shadow var(--transition), color var(--transition) }
+.socials a:hover{ transform:translateY(-6px); color:var(--accent-strong); box-shadow:0 12px 30px rgba(0,0,0,0.08) }
+
+/* enter button */
+.enterBtn{
+  margin-top:16px;
+  background: linear-gradient(90deg, rgba(207,159,58,0.12), rgba(212,175,55,0.06));
+  border:1px solid rgba(207,159,58,0.18);
+  color:#222; padding:12px 22px; border-radius:12px; cursor:pointer; font-weight:700;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.enterBtn:hover{ transform:translateY(-6px); box-shadow:0 14px 40px rgba(207,159,58,0.12) }
+
+/* ===== PAGE LAYOUT ===== */
+header{ position:fixed; top:18px; left:50%; transform:translateX(-50%); width:calc(100% - 60px); max-width:var(--maxw); display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:1500; }
+.navInner{ display:flex; align-items:center; gap:18px; background:transparent; padding:8px 14px; border-radius:12px; }
+.logoSmall{ display:flex; align-items:center; gap:10px }
+.logoBadge{ width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent-strong),#fff8e6); display:flex;align-items:center;justify-content:center;font-family:'Pacifico',cursive; font-weight:700; color:#1b1b1b; box-shadow:0 8px 30px rgba(21,21,21,0.06) }
+.navLinks{ display:flex; gap:12px; align-items:center; }
+.navLinks a{ padding:10px 12px; border-radius:10px; text-decoration:none; color:#222; font-weight:600; transition:all 220ms ease; }
+.navLinks a:hover{ background:rgba(255,255,255,0.7); color:var(--accent-strong); transform:translateY(-4px) }
+
+/* main container */
+main{ padding-top:110px; max-width:var(--maxw); margin:0 auto; min-height:100vh; opacity:1;}
+
+/* hero */
+.heroCard{
+  background: linear-gradient(180deg,#fff,#fff);
+  border-radius:18px; padding:36px; box-shadow:var(--shadow); display:flex; gap:26px; align-items:center;
+}
+.heroText h2{ font-family:'Pacifico',cursive; color:#111; font-size:2.2rem; margin-bottom:6px }
+.heroText p{ color:var(--muted); max-width:640px; line-height:1.6 }
+
+/* visual */
+.visualCard{ width:260px; border-radius:12px; overflow:hidden; background:#fff; border:1px solid rgba(0,0,0,0.03); padding:10px; display:flex; flex-direction:column; align-items:center; gap:12px }
+.avatar{ width:220px;height:220px;border-radius:14px; overflow:hidden; background:#f3efe6; display:flex; align-items:center; justify-content:center; border:4px solid rgba(207,159,58,0.08) }
+.avatar img{ width:100%; height:100%; object-fit:cover }
+
+/* sections */
+.section{ margin-top:34px; border-radius:14px; padding:26px; background:#fff; box-shadow:var(--shadow); }
+.section h3{ color:#222; margin-bottom:16px; }
+.grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+
+/* subject card */
+.subject-card{ background:linear-gradient(180deg,#fff,#fff); border-radius:12px; padding:16px; border:1px solid rgba(0,0,0,0.04); cursor:pointer; transition:transform var(--transition), box-shadow var(--transition); }
+.subject-card:hover{ transform:translateY(-8px); box-shadow:0 20px 60px rgba(21,21,21,0.06) }
+.subject-card .title{ font-weight:700; color:#111; margin-bottom:8px }
+.meta{ color:var(--muted); font-size:0.92rem }
+
+/* task cards */
+.task-row{ display:flex; gap:12px; flex-wrap:wrap; }
+.task-card{ flex:1; min-width:220px; padding:16px; border-radius:12px; background:linear-gradient(180deg,#fff,#fff); border:1px solid rgba(0,0,0,0.04); cursor:pointer; transition:transform var(--transition), box-shadow var(--transition) }
+.task-card:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(21,21,21,0.06) }
+
+/* gallery */
+.gallery-row{ display:flex; gap:12px; flex-wrap:wrap }
+
+/* modal */
+.modal-backdrop{ position:fixed; inset:0; display:none; place-items:center; z-index:2200; background:rgba(10,10,10,0.48); padding:20px }
+.modal{ width:100%; max-width:760px; background:#fff; border-radius:12px; padding:22px; box-shadow:0 30px 70px rgba(10,10,10,0.2); transform:translateY(18px); transition:all 260ms ease }
+
+/* footer */
+footer{ text-align:center; margin-top:28px; padding:28px 10px; color:var(--muted) }
+
+/* ===== animations: reveal on scroll & small effects ===== */
+.fade-up { opacity:1; transform:translateY(0); }
+.fade-up.show{ opacity:1; transform:translateY(0) }
+.pop{ transition:transform 260ms ease; }
+.pop:hover{ transform:scale(1.02) }
+
+/* responsive */
+@media (max-width:980px){
+  .grid{ grid-template-columns: repeat(2,1fr) }
+  #welcomeInner{ flex-direction:column; align-items:flex-start }
+  #welcomeRight{ width:100%; align-items:flex-start }
+}
+@media (max-width:640px){
+  header{ left:12px; transform:none; width:calc(100% - 24px) }
+  .grid{ grid-template-columns: 1fr }
+  .heroCard{ flex-direction:column; text-align:center }
+  .visualCard{ width:100% }
+  #welcomePage{ padding:14px }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== WELCOME OVERLAY ===== -->
+<section id="welcomePage" aria-hidden="false">
+  <div id="welcomeInner" role="dialog" aria-labelledby="welcomeTitle">
+    <div id="welcomeLeft">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="brandLogo">R</div>
+        <div>
+          <div style="font-weight:700;color:#222">Resti Nadia Marpaung</div>
+          <div style="font-size:0.9rem;color:var(--muted);margin-top:4px">Portfolio — Mahasiswi Ilmu Komputer</div>
+        </div>
+      </div>
+
+      <h1 id="welcomeTitle" class="welcomeTitle">Selamat Datang!</h1>
+      <p class="welcomeSub">Senang kamu mampir. Selintas tentang aku dan projek yang sedang aku kerjakan — klik tombol masuk untuk lihat portfolioku.</p>
+
+      <div id="typingOnce" aria-live="polite" style="font-size:1rem;font-weight:600"></div>
+
+      <div class="socials" aria-hidden="false">
+        <!-- 🟡 UBAH DI SINI: masukkan link sosial media kamu -->
+        <a id="https://www.instagram.com/ress____tii?igsh=Z204cDQ0cnR3cWdo" href="#" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a id="https://www.tiktok.com/@befekiii?_t=ZS-90BArCuNHDL&_r=1" href="#" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a id="https://open.spotify.com/playlist/43rLtYku4Y5DaC4ykpgMo3?si=iolTY-FpTIikA9ZWN-WQQg" href="#" target="_blank" title="Spotify"><i class="fa-brands fa-spotify"></i></a>
+      </div>
+
+      <button class="enterBtn" onclick="enterSite()" aria-label="Masuk ke portfolio">Masuk ke Portfolio</button>
+    </div>
+
+    <div id="welcomeRight" aria-hidden="true">
+      <div class="visualCard">
+        <div class="avatar" aria-hidden="true">
+          
+          <img src="gambar1/resti1.jpg" alt="Foto Resti" onerror="this.src='https://via.placeholder.com/420x420/fff8e6/333?text=Foto+Resti'">
+        </div>
+        <div style="text-align:center">
+          <div style="font-weight:700;color:#222">Universitas Sumatera Utara</div>
+          <div style="color:var(--muted);font-size:0.92rem;margin-top:6px">Ilmu Komputer • Aktif & Kreatif</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAIN PAGE ===== -->
+<header>
+  <div class="navInner" role="navigation" aria-label="Main navigation">
+    <div class="logoSmall">
+      <div class="logoBadge">R</div>
+      <div style="display:flex;flex-direction:column">
+        <div style="font-weight:700;color:#222">Resti Nadia</div>
+        <small style="color:var(--muted)">Portfolio</small>
+      </div>
+    </div>
+
+    <nav class="navLinks" aria-label="Top links">
+      <a href="#home" onclick="scrollToSection(event,'home')">Beranda</a>
+      <a href="#about" onclick="scrollToSection(event,'about')">Tentang Saya</a>
+      <a href="#matkul" onclick="scrollToSection(event,'matkul')">Daftar Mata Kuliah</a>
+      <a href="#tasks" onclick="scrollToSection(event,'tasks')">Tugas</a>
+      <a href="#gallery" onclick="scrollToSection(event,'gallery')">Galeri</a>
+    </nav>
+  </div>
+</header>
+
+<main id="mainContent" aria-live="polite" style="opacity:0;transition:opacity 600ms ease;">
+  <!-- HERO -->
+  <section id="home" class="section fade-up" style="margin-top:12px">
+    <div class="heroCard">
+      <div class="heroText">
+        <h2>Portfolio of <span style="color:var(--accent-strong)">Resti Nadia Marpaung</span></h2>
+        <p>Mahasiswi Ilmu Komputer — suka desain web, olahraga sore, dan belajar teknik pemrograman. Di sini aku kumpulkan materi kuliah, tugas, dan beberapa projek.</p>
+        <div style="margin-top:14px">
+          <button class="enterBtn" onclick="scrollToSection(null,'matkul')">Lihat Daftar Mata Kuliah</button>
+        </div>
+      </div>
+
+      <aside class="visualCard" aria-hidden="true">
+        <div class="avatar" style="width:180px;height:180px;border-radius:12px">
+          <img src="gambar1/" alt="Foto Resti" onerror="this.src='https://via.placeholder.com/420x420/fff8e6/333?text=Foto+Resti'">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+          <div style="background:#fff8ea;padding:8px 12px;border-radius:999px;font-weight:700;color:var(--accent-strong);border:1px solid rgba(207,159,58,0.06)">USU</div>
+          <div style="background:#fff;padding:8px 12px;border-radius:999px;font-weight:600;color:var(--muted);border:1px solid rgba(0,0,0,0.03)">Olahraga</div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section fade-up" style="margin-top:22px">
+    <h3>Tentang Saya</h3>
+    <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:center">
+      <div style="flex:1;min-width:260px">
+        <img src="gambar/foto-profil.jpg" alt="Foto Profil" style="width:100%;max-width:320px;border-radius:12px;box-shadow:var(--shadow)" onerror="this.src='https://via.placeholder.com/320x320/fff8e6/333?text=Foto+Profil'">
+      </div>
+      <div style="flex:2;min-width:260px">
+        <p style="color:var(--muted);line-height:1.6">
+          <strong>Resti Nadia Marpaung</strong> — lahir di Rantau Prapat, aktif di Universitas Sumatera Utara. Keseharianku: kuliah, praktik web, dan olahraga sore.  
+          Aku suka menggabungkan tampilan elegan dengan pengalaman pengguna yang bersih dan sederhana. <em style="color:var(--accent-strong)">Tetap semangat — langkah kecil tiap hari.</em>
+        </p>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <div style="background:#fff8ea;padding:8px 12px;border-radius:999px;font-weight:700;color:var(--accent-strong);border:1px solid rgba(207,159,58,0.06)">Web Dev</div>
+          <div style="background:#fff;padding:8px 12px;border-radius:999px;font-weight:700;color:var(--muted);border:1px solid rgba(0,0,0,0.03)">Olahraga</div>
+          <div style="background:#fff;padding:8px 12px;border-radius:999px;font-weight:700;color:var(--muted);border:1px solid rgba(0,0,0,0.03)">Musik</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATA KULIAH -->
+  <section id="matkul" class="section fade-up" style="margin-top:22px">
+    <h3>Daftar Mata Kuliah — Semester Ganjil 2025/2026</h3>
+    <div class="grid" id="subjectsGrid" style="margin-top:12px">
+      <!-- JS akan isi card di sini -->
+    </div>
+  </section>
+
+  <!-- NAVIGASI TUGAS -->
+  <section id="tasks" class="section fade-up" style="margin-top:22px">
+    <h3>3 Fitur Navigasi Tugas</h3>
+    <div class="task-row" style="margin-top:12px">
+      <div class="task-card" onclick="openTask('task1')">
+        <div style="font-weight:700;color:#111">Mengenal HTML, CSS, JavaScript & Tailwind</div>
+        <div class="meta">Ringkasan & sumber belajar</div>
+      </div>
+      <div class="task-card" onclick="openTask('task2')">
+        <div style="font-weight:700;color:#111">Tata Cara Membuat Website Sederhana</div>
+        <div class="meta">Langkah praktis</div>
+      </div>
+      <div class="task-card" onclick="openTask('task3')">
+        <div style="font-weight:700;color:#111">Kesan & Pesan Belajar Pemrograman Web</div>
+        <div class="meta">Refleksi & tips</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex justify-center space-x-6 mt-6">
+  <!-- Instagram -->
+  <a href="https://www.instagram.com/ress____tii?igsh=Z204cDQ0cnR3cWdo" target="_blank" class="text-pink-500 hover:text-pink-600 text-3xl">
+    <i class="fab fa-instagram"></i>
+  </a>
+
+  <!-- TikTok -->
+  <a href="https://www.tiktok.com/@befekiii?_t=ZS-90BArCuNHDL&_r=1" target="_blank" class="text-gray-800 hover:text-black text-3xl">
+    <i class="fab fa-tiktok"></i>
+  </a>
+
+  <!-- Spotify -->
+  <a href="https://open.spotify.com/playlist/43rLtYku4Y5DaC4ykpgMo3?si=iolTY-FpTIikA9ZWN-WQQg" target="_blank" class="text-green-500 hover:text-green-600 text-3xl">
+    <i class="fab fa-spotify"></i>
+  </a>
+</div>
+
+<!-- Tambahkan di <head> agar ikon muncul -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- SPOTIFY PLAYER -->
+  <div style="margin-top:20px; display:flex; justify-content:center;">
+    <iframe style="border-radius:12px"
+      src="https://open.spotify.com/embed/playlist/43rLtYku4Y5DaC4ykpgMo3?utm_source=generator"
+      width="100%" height="152" frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
+
+  <footer>
+    © 2025 Resti Nadia Marpaung — Dibuat dengan ❤ • 
+  </footer>
+</main>
+
+<!-- MODAL -->
+<div id="modalBackdrop" class="modal-backdrop" onclick="closeModal(event)">
+  <div class="modal" id="modalCard" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h4 id="modalTitle">Judul</h4>
+      <button class="closeBtn" onclick="closeModal(event)" style="background:transparent;border:0;font-size:1.1rem;cursor:pointer;color:var(--muted)"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="modalBody" style="color:var(--muted);margin-top:12px">Isi</div>
+  </div>
+</div>
+
+<!-- Sumber data mata kuliah -->
+<script>
+/* ---------- DATA MATA KULIAH (sesuaikan jika perlu) ---------- */
+const subjects = [
+  { id:1, name:"Wirausaha Digital", sks:2, jadwal:"Jumat, 08:00–09:40", dosen:"Dr. T. H. Febriana Harumy & Dr. Fauzan N.", desc:"Konsep kewirausahaan digital, model bisnis, studi kasus."},
+  { id:2, name:"Praktikum Basis Data", sks:1, jadwal:"Belum diset", dosen:"Insidini Fawwaz, M.Kom", desc:"Praktikum pemodelan dan implementasi basis data."},
+  { id:3, name:"Basis Data", sks:3, jadwal:"Rabu, 14:40–17:10", dosen:"Dr. Dewi Sartika Br Ginting & Insidini Fawwaz", desc:"Konsep basis data relasional, SQL, normalisasi."},
+  { id:4, name:"Praktikum Struktur Data", sks:1, jadwal:"Belum diset", dosen:"Insidini Fawwaz, M.Kom", desc:"Implementasi list, stack, queue, tree."},
+  { id:5, name:"Struktur Data", sks:3, jadwal:"Jumat, 13:50–16:20", dosen:"Anandhini Medianty Nababan & Insidini Fawwaz", desc:"Teori dan algoritma struktur data."},
+  { id:6, name:"Praktikum Pemrograman Web", sks:1, jadwal:"Belum diset", dosen:"Dewi Sartika Br Ginting", desc:"Praktikum pembuatan aplikasi web dasar."},
+  { id:7, name:"Pemrograman Web", sks:3, jadwal:"Rabu, 08:00–10:30", dosen:"Dr. Dewi Sartika Br Ginting & Nurrahmadayeni", desc:"HTML, CSS, JavaScript dan praktik membangun website."},
+  { id:8, name:"IELTS Preparation", sks:2, jadwal:"Senin, 09:40–11:20", dosen:"Dian Marisha Putri", desc:"Persiapan tes IELTS (listening, reading, writing, speaking)."},
+  { id:9, name:"Seni dan Kebugaran Kesehatan Masyarakat", sks:2, jadwal:"Selasa, 08:00–09:40", dosen:"dr. Rusmalawaty, M.Kes", desc:"Kegiatan kebugaran & kesehatan masyarakat."},
+  { id:10, name:"Organisasi Arsitektur Komputer", sks:3, jadwal:"Rabu, 10:30–13:00", dosen:"Dr. Handrizal & Amer Sharif", desc:"Struktur & organisasi arsitektur komputer."}
+];
+
+/* ---------- populate subject cards ---------- */
+const grid = document.getElementById('subjectsGrid');
+subjects.forEach(s=>{
+  const div = document.createElement('div');
+  div.className = 'subject-card fade-up';
+  div.innerHTML = `
+    <div class="title">${s.name}</div>
+    <div class="meta">SKS: ${s.sks} • ${s.jadwal}</div>
+    <div style="color:var(--muted);margin-top:10px;font-size:0.92rem">Dosen: ${s.dosen}</div>
+  `;
+  div.onclick = ()=> openSubject(s);
+  grid.appendChild(div);
+});
+
+/* ---------- modal handling ---------- */
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+
+function openSubject(s){
+  modalTitle.innerText = `${s.name} — ${s.jadwal}`;
+  modalBody.innerHTML = `<strong>SKS:</strong> ${s.sks} <br><strong>Dosen:</strong> ${s.dosen} <br><br> <strong>Deskripsi:</strong> ${s.desc} <br><br> <em style="color:${getComputedStyle(document.documentElement).getPropertyValue('--accent-strong')||'#cf9f3a'}">Klik luar kotak atau X untuk tutup.</em>`;
+  modalBackdrop.style.display = 'grid';
+  setTimeout(()=> modalBackdrop.querySelector('.modal').style.transform = 'translateY(0)', 10);
+}
+function closeModal(e){
+  if(e) e.stopPropagation();
+  modalBackdrop.querySelector('.modal').style.transform = 'translateY(18px)';
+  setTimeout(()=> modalBackdrop.style.display = 'none', 220);
+}
+document.addEventListener('keydown', (e)=> { if(e.key==='Escape') closeModal(); });
+
+/* ---------- tasks ---------- */
+function openTask(id){
+  if(id==='task1') openGeneric('Mengenal HTML, CSS, JavaScript & Tailwind', `
+    <p><strong>Ringkasan:</strong> HTML memberikan struktur, CSS mengatur tampilan, JavaScript menambahkan interaksi, Tailwind membantu styling cepat.</p>
+    <p><strong>Saran belajar:</strong> praktik langsung, buat mini-project, dan baca dokumentasi resmi Tailwind.</p>
+  `);
+  if(id==='task2') openGeneric('Tata Cara Membuat Website Sederhana', `
+    <ol>
+      <li>Rancang layout (wireframe).</li>
+      <li>Tulis struktur HTML.</li>
+      <li>Tambahkan styling CSS / Tailwind.</li>
+      <li>Tambah interaksi dengan JavaScript.</li>
+      <li>Uji & optimasi untuk mobile.</li>
+    </ol>
+  `);
+  if(id==='task3') openGeneric('Kesan & Pesan Belajar Pemrograman Web', `
+    <p>Kesan: menantang tapi menyenangkan. Pesan: konsistensi dan praktik adalah kunci.</p>
+  `);
+}
+function openGeneric(title, html){
+  modalTitle.innerText = title;
+  modalBody.innerHTML = html;
+  modalBackdrop.style.display = 'grid';
+}
+
+/* ---------- scroll nav & reveal ---------- */
+function scrollToSection(e,id){
+  if(e) e.preventDefault();
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.scrollIntoView({ behavior:'smooth', block:'start' });
+  // reveal fade-ups
+  setTimeout(()=> revealAll(), 320);
+}
+
+/* reveal on load & scroll */
+function revealAll(){
+  document.querySelectorAll('.fade-up').forEach(el=>{
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 60){
+      el.classList.add('show');
+    }
+  });
+}
+window.addEventListener('scroll', revealAll);
+window.addEventListener('load', ()=>{
+  // hide main until welcome closed
+  document.getElementById('mainContent').style.opacity = 1;
+  revealAll();
+});
+
+/* ---------- typing once (welcome) ---------- */
+const welcomeText = "Mahasiswi Ilmu Komputer • Aktif • Kreatif";
+const typingEl = document.getElementById('typingOnce');
+let idx = 0;
+function typeOnce(){
+  if(idx < welcomeText.length){
+    typingEl.textContent += welcomeText.charAt(idx);
+    idx++;
+    setTimeout(typeOnce, 55);
+  }
+}
+setTimeout(typeOnce, 700);
+
+/* ---------- enter site (hide welcome) ---------- */
+function enterSite(){
+  const welcome = document.getElementById('welcomePage');
+  const main = document.getElementById('mainContent');
+  welcome.classList.add('hidden');
+  // after animation, allow focus & scroll to top of main
+  setTimeout(()=>{
+    main.style.opacity = 1;
+    welcome.setAttribute('aria-hidden','true');
+    document.body.style.overflowY = 'auto';
+    // briefly show main (mainContent is already visible); scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 900);
+}
+
+
+document.getElementById('https://www.instagram.com/ress____tii?igsh=Z204cDQ0cnR3cWdo').href = '#';  
+document.getElementById('https://www.tiktok.com/@befekiii?_t=ZS-90BArCuNHDL&_r=1').href = '#';   
+document.getElementById('https://open.spotify.com/playlist/43rLtYku4Y5DaC4ykpgMo3?si=iolTY-FpTIikA9ZWN-WQQg').href = '#';   
+
+/* optional: prevent body scroll while welcome shown */
+document.body.style.overflow = 'auto';
+enterSite(); // otomatis buka langsung tanpa klik
+</script>
+
+</body>
+</html>
